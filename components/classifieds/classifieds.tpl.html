@@ -1,55 +1,72 @@
- <md-toolbar>
-        <div class="md-toolbar-tools">
-            <p><strong>ngClassifieds</strong></p>
-            <md-button ng-click="vm.openSidebar()">
-                <mdi-icon class="mdi mdi-plus-circle">
-                </mdi-icon>
-                New Classified
-            </md-button>
-            <md-button ng-click="showFilters=true">
-                <mdi-icon class="mdi mdi-magnify">
-                </mdi-icon>
-                Filters
-            </md-button>
-        </div>
-    </md-toolbar>
+<md-toolbar md-scroll-shrink>
+  <div class="md-toolbar-tools"> 
     
-    <!-- testing filters -->
+    <p><strong>ngClassifieds</strong></p>
     
-    <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
-        <md-input-container layout="row">
-            <label>Enter Search Term</label>
-            <input type="text" ng-model="classifiedsFilter">
-        </md-input-container>
-        <md-input-container>
-            <label>Category</label>
-            <md-select ng-model="category">
-                <md-option ng-repeat="category in vm.categories" value="{{category}}">
-                    {{ category }}
-                </md-option>
-            </md-select>
-        </md-input-container>
-        <div layout="row">
-            <md-button 
-               class="md-warn" ng-click="classifiedsFilter=' '; category= ' ' " >
-               Clear
-            </md-button>
-        </div>
+    <md-button ng-click="vm.openSidebar()" ng-if="vm.authData">
+      <md-icon class="mdi mdi-plus-circle"></md-icon>
+      New Classified
+    </md-button>
+
+    <md-button ng-click="vm.showFilters = !vm.showFilters">
+      <md-icon class="mdi mdi-magnify"></md-icon>
+      Filters
+    </md-button>
+    
+    <span flex></span>
+    
+    <md-button ui-sref="auth" ng-if="!vm.authData">
+      <md-icon class="mdi mdi-account"></md-icon>
+      Login
+    </md-button>
+    
+    <div ng-if="vm.authData">
+      <md-button ui-sref="auth" ng-click="vm.auth.$unauth()">      
+        Logout       
+      </md-button>
+      <img flex-align="center start" ng-src="{{ vm.authData.password.profileImageURL }}" class="profile-image" alt="Profile Image" />  
     </div>
-    <!-- end filters -->
-    <!-- classifieds/new route -->
-        <ui-view></ui-view>
     
-    <!-- end classifieds/new route -->
-     
-    <!-- sidenav moved to classifieds.new.tpl.html -->
-    
-    <md-content>
-        <classified-card 
-          classifieds="vm.classifieds"
-          classifieds-filter="classifiedsFilter"
-          category="category"
-          class="md-padding" 
-          layout="row" layout-wrap>    
-    </classified-card>
+
+
+  </div>
+</md-toolbar>
+
+<pre>{{ vm.authStuff }}</pre>
+
+<div class="filters" layout="row" layout-align="center center" ng-show="vm.showFilters">
+  <!--  We're working locally with our models here. They don't interact
+  with our controller because we don't prefix them with vm -->
+  <md-input-container>
+    <label>Enter a Search Term</label>
+    <input ng-model="classifiedsFilter" type="text">
+  </md-input-container>
+
+  <md-input-container>
+    <label>Category</label>
+    <md-select ng-model="category">
+      <md-option ng-repeat="category in vm.categories" value="{{ category }}">  
+        {{ category }}
+      </md-option>
+    </md-select>
+  </md-input-container>
+  
+  <div layout="row">
+    <md-button ng-click="classifiedsFilter = '';category='';" class="md-warn">
+      Clear
+    </md-button>
+  </div>
+
+</div>
+
+<ui-view></ui-view>
+
+<md-content layout-padding>
+  <classified-card
+    classifieds="vm.classifieds" 
+    search-filter="classifiedsFilter"
+    category-filter="category"
+    layout="row"
+    layout-wrap>
+  </classified-card>
 </md-content>

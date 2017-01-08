@@ -1,40 +1,67 @@
-(function(){
-    "use strict"
-    angular
-        .module("ngClassifieds")
-        .controller("newClassifiedsCtrl", function($scope, $state, $mdSidenav, $mdDialog, $timeout, classifiedsFactory) {
-        
-        var vm = this;
-        vm.closeSidebar = closeSidebar;
-        vm.saveClassified = saveClassified;
-        
-        $timeout(function() {
-            this.$mdSidenav('left').open();    
-        });
-        
-        $scope.$watch('vm.sidenavOpen', function(sidenav) {
-            console.log('test');
-            if(sidenav == false) {
-                $mdSidenav('left')
-                .close()
-                .then(function() {
-                    $state.go('classifieds');
-                })
-             }
-        });
-        function closeSidebar() {
-            vm.sidenavOpen = false;
+(function() {
+
+  "use strict";
+
+  angular
+    .module('ngClassifieds')
+    .controller('newClassifiedsController', function(auth, $state, $scope, $mdSidenav, $mdDialog, $timeout, classifiedsFactory) {
+
+      var vm = this;
+
+      vm.closeSidebar = closeSidebar;
+      vm.saveClassified = saveClassified;
+
+      vm.sidebarTitle = 'Add a Classifed';
+
+      // We need a watcher to trigger the sidenav
+      // opening and closing
+      $scope.$watch('sidenavOpen', function(sidenavOpen) {
+        if(sidenavOpen === false) {
+          $mdSidenav('left')
+            .close()
+            .then(function() {
+              $state.go('classifieds');
+          });
         }
-        function saveClassified(classified) {
-            if(classified) {
-                classified.contact = {
-                    name: "Papa Jo",
-                    phone: "666-555-4444",
-                    email: "papajo@github.com"
-                }
-                $scope.$emit('newClassified', classified);
-                vm.sidenavOpen = false;
-            }
+      });
+
+      $timeout(function() {
+        $mdSidenav('left').open();     
+      });
+
+      // Case 1 - close the sidenav and change state manually
+      // function closeSidebar = function() {
+      //   vm.classified = {};
+      //   $mdSidenav('left')
+      //     .close()
+      //     .then(function() {
+      //       $state.go('classifieds');
+      //   });      
+      // }
+
+      // Case 2 - simply use the watcher to move state
+      function closeSidebar() {
+        vm.classified = {};
+        $scope.sidenavOpen = false;        
+      }
+
+      function saveClassified(classified, userId) {
+        if(classified) {
+
+          classified.contact = {
+            name: "Ryan Chenkie", 
+            phone: "(555) 555-5555",
+            email: "ryanchenkie@gmail.com"
+          }
+          
+          classified.user_id = auth.user.uid;
+          
+          $scope.$emit('newClassified', classified)          
+          $scope.sidenavOpen = false;
         }
+      }
+
+
     });
+
 })();
