@@ -1,4 +1,2 @@
 node_modules
-test.js
-node_modules
-lodash/
+.DS_Store

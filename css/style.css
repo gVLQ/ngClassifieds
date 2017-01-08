@@ -1,28 +1,31 @@
-button.material-icons {
-    margin-top: 7px;
+md-card img {
+  width: 100%;
+  height: auto !important;
+  min-height: 0px;
+}
+
+button .material-icons {
+  margin-top: 7px;
+}
+
+.filters md-input-container {
+  margin-right: 10px;
 }
 
 .classified.ng-enter, .classified.ng-move {
-    -webkit-transition: 0.4s all;
-    transition: 0.4s all;
-    opacity: 0;
+  transition: 0.4s all;
+  opacity: 0;
 }
 
-.classified.ng-enter.ng-enter-active, .classified.ng-enter-move.ng-enter-active {
-    opacity: 1;
+.classified.ng-enter.ng-enter-active, .classified.ng-move.ng-move-active {
+  opacity: 1;
 }
 
 .classified.ng-leave {
-    -webkit-animation: 0.4s fade_classified;
-    animation: 0.4s fade_classified;
-}
-
-@-webkit-keyframes fade_classified {
-    from { opacity: 1; }
-    to { opacity: 0; }
+  animation: 0.4s fade_classified;
 }
 
 @keyframes fade_classified {
-    from { opacity: 1; }
-    to { opacity: 0; }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

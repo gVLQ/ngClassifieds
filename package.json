@@ -1,15 +1,15 @@
 {
   "name": "ng-classifieds",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "ngClassifieds App",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "(https://github.com/papajo/ng-classifieds.git)"
-  },
-  "author": "Gabriel Vlaicu <gabriel.vlaicu11@yahoo.com> (https://g-vlq.herokuapp.com/)",
-  "license": "ISC"
+  "author": "Gabriel Vlaicu",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-aria": "^1.5.0",
+    "angular-material": "^0.11.4",
+    "mdi": "^1.4.57"
+  }
 }

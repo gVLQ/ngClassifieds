@@ -1,13 +1,19 @@
 (function() {
-    "use strict"
+
+  "use strict";
+
+  angular
+    .module('ngClassifieds')
+    .factory('classifiedsFactory', function($http) {
+
+      function getClassifieds() {
+        return $http.get('data/classifieds.json');
+      }
+
+      return {
+        getClassifieds: getClassifieds
+      }
+      
+    });
     
-    angular
-        .module("ngClassifieds")
-        .factory("classifiedsFactory", function($http, $firebaseArray) {
-            
-            var ref = new Firebase('https://vlq11-adds.firebaseio.com');
-            return {
-                ref: $firebaseArray(ref)
-            }
-        });
 })();
